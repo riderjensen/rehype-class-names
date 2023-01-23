@@ -1,5 +1,5 @@
 import { selectAll } from "hast-util-select";
-import { Node, Properties } from "hast-util-select/lib/types";
+import { Node, Properties } from "hast-util-select/lib/types.js";
 
 type Property =
   | boolean
