@@ -1,0 +1,28 @@
+{
+  "name": "rehype-class-names",
+  "version": "1.0.1",
+  "description": "A utility plugin to use with rehype that adds class names to HAST (html tree)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/riderjensen/rehype-class-names.git"
+  },
+  "keywords": [
+    "rehype",
+    "hast",
+    "classes"
+  ],
+  "author": "Rider Jensen <riderjensen@gmail.com> (https://riderjensen.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/riderjensen/rehype-class-names/issues"
+  },
+  "homepage": "https://github.com/riderjensen/rehype-class-names#readme",
+  "dependencies": {
+    "hast-util-select": "^5.0.5"
+  }
+}
