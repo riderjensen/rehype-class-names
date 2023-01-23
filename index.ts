@@ -1,5 +1,5 @@
 import { selectAll } from "hast-util-select";
-import { Element, Node, Properties } from "hast-util-select/lib/types";
+import { Node, Properties } from "hast-util-select/lib/types";
 
 type Property =
   | boolean
