@@ -1,4 +1,6 @@
 {
+  "exclude": ["node_modules"],
+  "include": ["index.d.ts"],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
