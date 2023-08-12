@@ -18,10 +18,10 @@ export default (additions: Properties) => {
   return (node: Node) => adders.forEach((a) => a(node));
 };
 
-const adder = ([selector, className]: OneProperty) => {
+const adder = ([selector, cName]: OneProperty) => {
   return (node: Node) =>
     selectAll(selector, node).forEach((elem) => {
-      if (!elem?.properties?.className) elem.properties = { className };
-      else elem.properties.className += ` ${className}`;
+      if (!elem?.properties?.className) elem.properties = { ...elem.properties, className: cName };
+      else elem.properties.className += ` ${cName}`;
     });
 };
