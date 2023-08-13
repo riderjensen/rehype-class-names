@@ -1,27 +1,23 @@
+import { Element, Nodes } from 'hast';
 import { selectAll } from "hast-util-select";
-import { Node, Properties } from "hast-util-select/lib/types.js";
+import { classnames } from 'hast-util-classnames';
 
-type Property =
-  | boolean
-  | number
-  | string
-  | null
-  | undefined
-  | Array<string | number>;
+interface IncomingProperties {
+  [ElementName: string]: string;
+}
 
-type OneProperty = [string, Property];
+type Entry = [string, string];
 
-export default (additions: Properties) => {
-  const adders = Object.entries(additions).map((property: OneProperty) =>
+export default (additions: IncomingProperties) => {
+  const adders = Object.entries(additions).map((property: Entry) =>
     adder(property)
   );
-  return (node: Node) => adders.forEach((a) => a(node));
+  return (node: Nodes) => adders.forEach((a) => a(node));
 };
 
-const adder = ([selector, cName]: OneProperty) => {
-  return (node: Node) =>
-    selectAll(selector, node).forEach((elem) => {
-      if (!elem?.properties?.className) elem.properties = { ...elem.properties, className: cName };
-      else elem.properties.className += ` ${cName}`;
+const adder = ([selector, cName]: Entry) => {
+  return (nodes: Nodes) =>
+    selectAll(selector, nodes).forEach((elem: Element) => {
+      classnames(elem, cName);
     });
 };

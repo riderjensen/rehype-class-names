@@ -1,3 +1,6 @@
-import { Node, Properties } from "hast-util-select/lib/types.js";
-declare const _default: (additions: Properties) => (node: Node) => void;
+import { Nodes } from 'hast';
+interface IncomingProperties {
+    [ElementName: string]: string;
+}
+declare const _default: (additions: IncomingProperties) => (node: Nodes) => void;
 export default _default;

@@ -8,10 +8,12 @@ import addClasses from "./index.js";
 
 const testString = `
 # header
-## sub 1
-### sub 2
+## sub 2
+### sub 3
+#### sub 4
+##### Sub 5
 Profile pictures are important.
-[Yale Medicine](riderjensen.com)
+[Rider Jensen](riderjensen.com)
 
 1. Create a Github repository
 2. Pushed up code
@@ -31,9 +33,13 @@ test('the addClasses adds classes', async () => {
       'h1,h2,h3': 'title',
       h1: 'is-1',
       h2: 'is-2',
+      h3: { 'hello': false, 32: true },
+      h4: 10,
+      h5: [],
       p: 'one two',
       a: "test",
-      ol: "list-decimal"
+      ol: "list-decimal",
+      li: ['test', 'mega'],
     })
     .process(matterResult.content);
   
@@ -41,8 +47,11 @@ test('the addClasses adds classes', async () => {
   
   expect(contentHtml).toMatch(/(<h1 class="title is-1">)/i);
   expect(contentHtml).toMatch(/(<h2 class="title is-2">)/i);
-  expect(contentHtml).toMatch(/(<h3 class="title">)/i);
+  expect(contentHtml).toMatch(/(<h3 class="title 32">)/i);
+  expect(contentHtml).toMatch(/(<h4 class="10">)/i);
+  expect(contentHtml).toMatch(/(<h5 class="">)/i);
   expect(contentHtml).toMatch(/(<p class="one two">)/i);
   expect(contentHtml).toMatch(/(<a href="riderjensen.com" class="test">)/i);
   expect(contentHtml).toMatch(/(<ol class="list-decimal">)/i);
+  expect(contentHtml).toMatch(/(<li class="test mega">)/i);
 })

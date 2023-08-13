@@ -30,7 +30,9 @@
   },
   "homepage": "https://github.com/riderjensen/rehype-class-names#readme",
   "dependencies": {
-    "hast-util-select": "^5.0.5"
+    "@types/hast": "^3.0.0",
+    "hast-util-classnames": "^3.0.0",
+    "hast-util-select": "^6.0.0"
   },
   "devDependencies": {
     "gray-matter": "^4.0.3",
