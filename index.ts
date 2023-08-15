@@ -1,23 +1,24 @@
-import { Element, Nodes } from 'hast';
+import { Plugin } from 'unified';
+import { Element, Nodes, Root } from 'hast';
 import { selectAll } from "hast-util-select";
-import { classnames } from 'hast-util-classnames';
+import { classnames, Conditional } from 'hast-util-classnames';
 
-interface IncomingProperties {
-  [ElementName: string]: string;
+export interface Options {
+  [selector: string]: Conditional;
 }
 
-type Entry = [string, string];
+type Entry = [string, Conditional];
 
-export default (additions: IncomingProperties) => {
-  const adders = Object.entries(additions).map((property: Entry) =>
-    adder(property)
-  );
-  return (node: Nodes) => adders.forEach((a) => a(node));
-};
+const rehypeClassNames: Plugin<[(Options | null | undefined)?], Root> = (additions: Options | null | undefined) => {
+  return (tree: Nodes) => {
+    if (additions)
+      Object.entries(additions).map(([selector, cName]: Entry) => {
+        return (nodes: Nodes) =>
+          selectAll(selector, nodes).forEach((elem: Element) => {
+            classnames(elem, cName);
+          });
+      }).forEach((a) => a(tree))
+  }
+}
 
-const adder = ([selector, cName]: Entry) => {
-  return (nodes: Nodes) =>
-    selectAll(selector, nodes).forEach((elem: Element) => {
-      classnames(elem, cName);
-    });
-};
+export default rehypeClassNames;

@@ -10,8 +10,7 @@
   ],
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "build": "./node_modules/typescript/bin/tsc",
-    "publish": "npm version minor && npm publish"
+    "build": "./node_modules/typescript/bin/tsc"
   },
   "type": "module",
   "repository": {
@@ -32,7 +31,8 @@
   "dependencies": {
     "@types/hast": "^3.0.0",
     "hast-util-classnames": "^3.0.0",
-    "hast-util-select": "^6.0.0"
+    "hast-util-select": "^6.0.0",
+    "unified": "^10.1.2"
   },
   "devDependencies": {
     "gray-matter": "^4.0.3",
@@ -41,7 +41,6 @@
     "rehype-stringify": "^9.0.3",
     "remark-parse": "^10.0.2",
     "remark-rehype": "^10.1.0",
-    "typescript": "^5.1.6",
-    "unified": "^10.1.2"
+    "typescript": "^5.1.6"
   }
 }

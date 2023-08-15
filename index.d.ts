@@ -1,6 +1,8 @@
-import { Nodes } from 'hast';
-interface IncomingProperties {
-    [ElementName: string]: string;
+import { Plugin } from 'unified';
+import { Root } from 'hast';
+import { Conditional } from 'hast-util-classnames';
+export interface Options {
+    [selector: string]: Conditional;
 }
-declare const _default: (additions: IncomingProperties) => (node: Nodes) => void;
-export default _default;
+declare const rehypeClassNames: Plugin<[(Options | null | undefined)?], Root>;
+export default rehypeClassNames;

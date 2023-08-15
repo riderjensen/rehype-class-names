@@ -4,7 +4,7 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
-import addClasses from "./index.js";
+import rehypeClassNames from "./index.js";
 
 const testString = `
 # header
@@ -20,7 +20,7 @@ Profile pictures are important.
 3. Connect account to Github
 `;
 
-test('the addClasses adds classes', async () => {
+test('the classes are added', async () => {
   const matterResult = matter(testString);
 
   // Use remark to convert markdown into HTML string
@@ -29,7 +29,7 @@ test('the addClasses adds classes', async () => {
     .use(remarkRehype)
     .use(rehypeFormat)
     .use(rehypeStringify)
-    .use(addClasses, {
+    .use(rehypeClassNames, {
       'h1,h2,h3': 'title',
       h1: 'is-1',
       h2: 'is-2',
@@ -54,4 +54,81 @@ test('the addClasses adds classes', async () => {
   expect(contentHtml).toMatch(/(<a href="riderjensen.com" class="test">)/i);
   expect(contentHtml).toMatch(/(<ol class="list-decimal">)/i);
   expect(contentHtml).toMatch(/(<li class="test mega">)/i);
+})
+
+test('no classes are added with an empty object', async () => {
+  const matterResult = matter(testString);
+
+  // Use remark to convert markdown into HTML string
+  const processedContent = await unified()
+    .use(remarkParse)
+    .use(remarkRehype)
+    .use(rehypeFormat)
+    .use(rehypeStringify)
+    .use(rehypeClassNames, {})
+    .process(matterResult.content);
+  
+  const contentHtml = processedContent.toString();
+  
+  expect(contentHtml).toMatch(/(<h1>)/i);
+  expect(contentHtml).toMatch(/(<h2>)/i);
+  expect(contentHtml).toMatch(/(<h3>)/i);
+  expect(contentHtml).toMatch(/(<h4>)/i);
+  expect(contentHtml).toMatch(/(<h5>)/i);
+  expect(contentHtml).toMatch(/(<p>)/i);
+  expect(contentHtml).toMatch(/(<a href="riderjensen.com">)/i);
+  expect(contentHtml).toMatch(/(<ol>)/i);
+  expect(contentHtml).toMatch(/(<li>)/i);
+})
+
+test('no classes are added with a missing object', async () => {
+  const matterResult = matter(testString);
+
+  // Use remark to convert markdown into HTML string
+  const processedContent = await unified()
+    .use(remarkParse)
+    .use(remarkRehype)
+    .use(rehypeFormat)
+    .use(rehypeStringify)
+    .use(rehypeClassNames)
+    .process(matterResult.content);
+  
+  const contentHtml = processedContent.toString();
+  
+  expect(contentHtml).toMatch(/(<h1>)/i);
+  expect(contentHtml).toMatch(/(<h2>)/i);
+  expect(contentHtml).toMatch(/(<h3>)/i);
+  expect(contentHtml).toMatch(/(<h4>)/i);
+  expect(contentHtml).toMatch(/(<h5>)/i);
+  expect(contentHtml).toMatch(/(<p>)/i);
+  expect(contentHtml).toMatch(/(<a href="riderjensen.com">)/i);
+  expect(contentHtml).toMatch(/(<ol>)/i);
+  expect(contentHtml).toMatch(/(<li>)/i);
+})
+
+test('it can work in the middle of a pipeline', async () => {
+  const matterResult = matter(testString);
+
+  // Use remark to convert markdown into HTML string
+  const processedContent = await unified()
+    .use(remarkParse)
+    .use(remarkRehype)
+    .use(rehypeFormat)
+    .use(rehypeStringify)
+    .use(rehypeClassNames)
+    .use(rehypeStringify)
+    .use(rehypeFormat)
+    .process(matterResult.content);
+  
+  const contentHtml = processedContent.toString();
+  
+  expect(contentHtml).toMatch(/(<h1>)/i);
+  expect(contentHtml).toMatch(/(<h2>)/i);
+  expect(contentHtml).toMatch(/(<h3>)/i);
+  expect(contentHtml).toMatch(/(<h4>)/i);
+  expect(contentHtml).toMatch(/(<h5>)/i);
+  expect(contentHtml).toMatch(/(<p>)/i);
+  expect(contentHtml).toMatch(/(<a href="riderjensen.com">)/i);
+  expect(contentHtml).toMatch(/(<ol>)/i);
+  expect(contentHtml).toMatch(/(<li>)/i);
 })
